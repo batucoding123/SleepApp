@@ -1,0 +1,151 @@
+var timeSlept= [0,0,0,0,0];
+var page = "home";
+var time = 0;
+var SleepTokens = 0;
+
+
+//home + sleep
+
+if(page == "home" || page == "sleep"){
+
+timedLoop(1000, function(){
+  var date = new Date();
+  var day= date.getDate();
+  var month = date.getMonth();
+  var year = date.getFullYear();
+  
+  setText("T1", "Today Is: " + (month+1) + "/" + day + "/" + year);
+  
+  var min = date.getMinutes();
+  var hour  = date.getHours();
+  
+    setText("T2", "The Time Is: " + hour + ":" + min);
+    
+    if (page == "sleep"){
+      time += 1;
+      setText("SPT", "Time Elapsed: " +"min: " + Math.floor(time/60) + " sec: " + time%60);
+    }
+
+});
+//home Buttons
+onEvent("ScheduleB", "click", function( ) {
+  setScreen("SleepStats");
+});
+
+onEvent("SleepB", "click", function( ) {
+  setScreen("Sleep");
+    page = "sleep";
+});
+
+onEvent("ShopB", "click", function( ) {
+  setScreen("Shop");
+});
+
+onEvent("SettingsB", "click", function( ) {
+  setScreen("Settings");
+});
+
+//sleep buttons
+
+onEvent("CBS", "click", function( ) {
+  setScreen("SleepStats");
+  page = "";
+   SleepTokens =  Math.floor(time/60);
+  time = 0;
+});
+
+onEvent("HBS", "click", function( ) {
+  setScreen("home");
+  page = "";
+   SleepTokens =  Math.floor(time/60);
+  time = 0;
+});
+
+onEvent("SBS", "click", function( ) {
+  setScreen("Shop");
+  page = "";
+   SleepTokens =  Math.floor(time/60);
+  time = 0;
+});
+
+onEvent("SBSleep", "click", function( ) {
+  setScreen("Settings");
+  page = "";
+   SleepTokens =  Math.floor(time/60);
+  time = 0;
+});
+
+}
+
+
+
+
+//chart page 
+
+drawChart("chart2", "bar", [
+	{ label: "Day 1", value: timeSlept[timeSlept.length-5] },
+	{ label: "Day 2", value: timeSlept[timeSlept.length-4] },
+	{ label: "Day 3", value: timeSlept[timeSlept.length-3] },
+	{ label: "Day 4", value: timeSlept[timeSlept.length-2] },
+	{ label: "Day 5", value: timeSlept[timeSlept.length-1] }
+]);
+
+onEvent("HB", "click", function( ) {
+  setScreen("home");
+});
+
+onEvent("SB", "click", function( ) {
+  setScreen("Sleep");
+  page = "sleep";
+});
+
+onEvent("ShopBut", "click", function( ) {
+  setScreen("Shop");
+});
+
+onEvent("SetB", "click", function( ) {
+  setScreen("Settings");
+});
+
+//shop page
+
+setText("SleepPointsText", "ST:" + SleepTokens);
+
+onEvent("BH", "click", function( ) {
+  setScreen("home");
+});
+
+onEvent("BC", "click", function( ) {
+  setScreen("SleepStats");
+});
+
+onEvent("BS", "click", function( ) {
+  setScreen("Sleep");
+  page = "sleep";
+});
+
+onEvent("Bset", "click", function( ) {
+  setScreen("Settings");
+});
+
+
+//settings page
+
+onEvent("Hom", "click", function( ) {
+  setScreen("home");
+});
+
+onEvent("Cal", "click", function( ) {
+  setScreen("SleepStats");
+});
+
+onEvent("Sle", "click", function( ) {
+  setScreen("Sleep");
+  page = "sleep";
+});
+
+onEvent("Sho", "click", function( ) {
+  setScreen("Shop");
+});
+
+
